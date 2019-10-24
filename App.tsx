@@ -6,15 +6,8 @@
  * @flow
  */
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView, StyleSheet, ScrollView, View, Text} from 'react-native';
 
 import {
   Header,
@@ -23,47 +16,57 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import {newLocalDatabase} from './repository';
 
 const App = () => {
+  const [db, setDb] = useState<PouchDB.Database | null>(null);
+  const showDb = async () => {
+    if (db) {
+      console.log(await db.info());
+    }
+  };
+  useEffect(() => {
+    setDb(newLocalDatabase('rnrps'));
+  }, []);
+  useEffect(() => {
+    showDb();
+  }, [db]);
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
+    <SafeAreaView>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={styles.scrollView}>
+        <Header />
+        <View style={styles.body}>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>Step Z</Text>
+            <Text style={styles.sectionDescription}>
+              Edit <Text style={styles.highlight}>App.js</Text> to change this
+              screen and then come back to see your edits.
+            </Text>
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>See Your Changes</Text>
+            <Text style={styles.sectionDescription}>
+              <ReloadInstructions />
+            </Text>
+          </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>Debug</Text>
+            <Text style={styles.sectionDescription}>
+              <DebugInstructions />
+            </Text>
+          </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>Learn More</Text>
+            <Text style={styles.sectionDescription}>
+              Read the docs to discover what to do next:
+            </Text>
+          </View>
+          <LearnMoreLinks />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
