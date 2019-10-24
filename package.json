@@ -1,0 +1,36 @@
+{
+  "name": "rnrps",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@craftzdog/pouchdb-core-react-native": "^7.0.0",
+    "@craftzdog/pouchdb-replication-react-native": "^7.0.0",
+    "base-64": "^0.1.0",
+    "events": "^3.0.0",
+    "pouchdb-adapter-http": "^7.1.1",
+    "pouchdb-adapter-react-native-sqlite": "^2.0.0",
+    "pouchdb-mapreduce": "^7.1.1",
+    "react": "16.8.1",
+    "react-native": "0.61.2",
+    "react-native-sqlite-2": "^3.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.0",
+    "@babel/runtime": "^7.5.0",
+    "@react-native-community/eslint-config": "^0.0.3",
+    "@types/base-64": "^0.1.3",
+    "babel-jest": "^24.1.0",
+    "jest": "^24.1.0",
+    "metro-react-native-babel-preset": "^0.51.1",
+    "react-test-renderer": "16.8.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
