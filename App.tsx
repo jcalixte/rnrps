@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, ScrollView, View, Text} from 'react-native';
 
