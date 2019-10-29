@@ -219,6 +219,8 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.2)
   - RNSqlite2 (1.0.0):
     - React
+  - RNVectorIcons (6.6.0):
+    - React
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -250,6 +252,7 @@ DEPENDENCIES:
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNSqlite2 (from `../node_modules/react-native-sqlite-2`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -307,6 +310,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNSqlite2:
     :path: "../node_modules/react-native-sqlite-2"
+  RNVectorIcons:
+    :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -337,8 +342,9 @@ SPEC CHECKSUMS:
   React-RCTVibration: fb54c732fd20405a76598e431aa2f8c2bf527de9
   ReactCommon: 5848032ed2f274fcb40f6b9ec24067787c42d479
   RNSqlite2: 038cbebb953f80432db480c5ac5fd8ae427f8446
+  RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: 14927e37bd25376d216b150ab2a561773d57911f
 
-PODFILE CHECKSUM: be586af86475a7a112274f8b21180c02afb6b670
+PODFILE CHECKSUM: 80042df0f7340415e3c5eaf30cc27161d105ba5c
 
 COCOAPODS: 1.7.5
