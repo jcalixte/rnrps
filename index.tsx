@@ -1,4 +1,4 @@
-import './repository/polypouch';
+import './src/repository/polypouch';
 import React from 'react';
 import {AppRegistry} from 'react-native';
 import {Provider as PaperProvider} from 'react-native-paper';

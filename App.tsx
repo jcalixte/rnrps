@@ -1,71 +1,49 @@
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, ScrollView, View, Text} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {newLocalDatabase} from './repository';
+import React, {useState, FunctionComponent} from 'react';
+import {SafeAreaView, ScrollView, View, Text, Image} from 'react-native';
+import {Play} from './src/views/Play';
+import {createAppContainer, NavigationInjectedProps} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import {TextInput, Button} from 'react-native-paper';
 
-const App = () => {
-  const [db, setDb] = useState<PouchDB.Database | null>(null);
-  const showDb = async () => {
-    if (db) {
-      console.log(await db.info());
+const Home: FunctionComponent<NavigationInjectedProps> = ({navigation}) => {
+  const [id, setId] = useState('');
+
+  const play = () => {
+    if (!id) {
+      return;
     }
+    navigation.navigate('Play', {id: id.toLowerCase()});
   };
-  useEffect(() => {
-    setDb(newLocalDatabase('rnrps'));
-  }, []);
-  useEffect(() => {
-    showDb();
-  }, [db]);
+
   return (
     <SafeAreaView>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.scrollView}>
-        <View style={styles.body}>
-          <Text>Join a game</Text>
+      <Image source={require('./src/assets/logo.png')} />
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
+        <View>
+          <TextInput
+            value={id}
+            onChangeText={setId}
+            label="Join a game"
+            returnKeyType="search"
+            onSubmitEditing={play}
+          />
+          <Button onPress={play}>Play</Button>
         </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+const MainNavigator = createStackNavigator(
+  {
+    Home: {screen: Home},
+    Play: {screen: Play},
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  {
+    headerMode: 'none',
   },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+);
+
+const App = createAppContainer(MainNavigator);
 
 export default App;
