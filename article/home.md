@@ -25,10 +25,25 @@ Grâce, CouchDb excelle dans la réplication de base de données. Eh oui, vu qu'
 ### POUCHDB
 
 Si CouchDb sert à manipuler des données sur un serveur, Pouchdb nous aide à manipuler les bases de données locales. Point important : PouchDb propose la même API pour manipuler les bases de données ; qu'elles soient locales ou distantes, et ça c'est top. Base de données locales ou distantes, même combat !
+`PouchDb` propose également une méthode extrèmement utile, la méthode `sync` !
+
+> CouchDB was designed with sync in mind, and this is exactly what it excels at. Many of the rough edges of the API serve this larger purpose. For instance, managing your document revisions pays off in the future, when you eventually need to start dealing with conflicts.
+
+[PouchDb Documentation](https://pouchdb.com/guides/replication.html)
+
+La méthode `sync` nous permet d'envoyer les données modifées localement et récupérer d'éventuelle mise à jour. Elle est en fait le raccourci de deux méthodes lancées une après l'autre :
+
+```js
+localDB.replicate.to(remoteDB);
+localDB.replicate.from(remoteDB);
+```
+
+L'ordre est important d'ailleurs car mettre à jour d'abord le serveur distant c'est rendre disponible par la suite sur la base de données locale des possibles conflits que la mise à jour peut provoquer.
 
 # PIERRE FEUILLE CISEAUX
 
 On se lance enfin sur cette application ? Au préalable il faut savoir installer CouchDb, vous pouvez le faire de manière très simple en suivant la documentation.
+
 Pour nous faciliter la tâche je nous ai mâché le travail https://github.com/jcalixte/rps. Clone, yarn, créer un « .env » à la racine et y ajouter la variable d'environnement l'URL vers votre serveur CouchDb.
 
 ## Qu'allons-nous stocker comme donnée ?
@@ -62,10 +77,10 @@ Maintenant il faut être capable de rendre ces deux documents utilisables dans l
 
 La clé de voûte de notre système de synchronisation en direct est la méthode de Pouchdb.sync. Cette méthode permet de pousser les modifications de notre base de données locales verse serveur, puis de récupérer les changements depuis le serveur vers la base locale. Si en plus nous rajouter la propriété « live: true ». Alors ces changements sont transmis directement grâce à des web sockets initialisés automatiquement. Alors, nous ne voulons pas tout suivre en direct, non non. Seulement la partie en cours, c'est pour cela que nous utilisons l'id passé en paramètre pour demander au serveur de filtrer ce qui doit être synchroniser, il y a d'autre manière de faire mais cette méthode nous convient parfaitement et c'est la plus rapide de toute. Voici donc la règle, toute récupération ou modification se fait sur le serveur local, puis nous laissons faire la méthode Sync qui s'assure de nous enregistrer le document sur le serveur.
 
-## MAIS EN CAS DE CONFLIT ?
+## Et si jamais il y a un conflit ?
 
 Bonne question ! Que se passe-t-il si les deux joueurs modifient la même partie en même temps ? Eh bien ce sera le sujet d'un autre article où nous parlerons également de synchronisation entre deux longues sessions hors-ligne plus promptes à engendrer des conflits.
-Pour l'instant nous allons simplement faire en sorte que le joueur 2 joue toujours après le joueur 1.
+Notre système actuel en est prémuni, ouf !
 
 ## LA SUITE !
 
