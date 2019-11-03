@@ -31,11 +31,9 @@ class PlayService {
   }
 
   public async joinPlay(id: string, userId: string): Promise<IPlay | null> {
-    console.log('join');
     const play = await repository.getRemote<IPlay>(
       this.addSuffix(id, Player.Player1),
     );
-    console.log('join', play);
     if (!play) {
       return null;
     }
@@ -44,7 +42,6 @@ class PlayService {
       return play;
     }
     play.player2 = userId;
-    console.log('join', userId);
 
     const result = await repository.save(play);
     const secondPlayerPlay: IPlay = {
@@ -53,7 +50,7 @@ class PlayService {
       _rev: undefined,
     };
     await repository.save(secondPlayerPlay);
-    console.log(play, secondPlayerPlay);
+
     return result ? play : null;
   }
 

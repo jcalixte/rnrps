@@ -11,6 +11,7 @@
   "dependencies": {
     "@craftzdog/pouchdb-core-react-native": "^7.0.0",
     "@craftzdog/pouchdb-replication-react-native": "^7.0.0",
+    "@react-native-community/async-storage": "^1.6.2",
     "base-64": "^0.1.0",
     "events": "^3.0.0",
     "mobx": "^5.14.2",
@@ -20,6 +21,7 @@
     "pouchdb-adapter-http": "^7.1.1",
     "pouchdb-adapter-react-native-sqlite": "^2.0.0",
     "pouchdb-mapreduce": "^7.1.1",
+    "pouchdb-react-native": "^6.4.1",
     "react": "16.8.1",
     "react-native": "0.61.2",
     "react-native-gesture-handler": "^1.5.0",

@@ -1,5 +1,5 @@
 import React, {useState, FunctionComponent} from 'react';
-import {SafeAreaView, ScrollView, View, Text, Image} from 'react-native';
+import {SafeAreaView, ScrollView, View, Image, StyleSheet} from 'react-native';
 import {Play} from './src/views/Play';
 import {createAppContainer, NavigationInjectedProps} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -16,7 +16,7 @@ const Home: FunctionComponent<NavigationInjectedProps> = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <Image source={require('./src/assets/logo.png')} />
       <ScrollView contentInsetAdjustmentBehavior="automatic">
         <View>
@@ -33,6 +33,13 @@ const Home: FunctionComponent<NavigationInjectedProps> = ({navigation}) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+});
 
 const MainNavigator = createStackNavigator(
   {

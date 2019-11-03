@@ -1,14 +1,14 @@
-import PouchDB from './Pouchdb';
+import PouchDB from 'pouchdb-react-native';
 import bus, {SYNC_UP} from '../utils/bus';
 import IDocument from '../models/IDocument';
 import Player from '../enums/Player';
 
 export const newLocalDatabase = (name: string): PouchDB.Database<{}> => {
-  return new PouchDB(name, {adapter: 'react-native-sqlite'});
+  return new PouchDB(name);
 };
 
 class Repository {
-  private local = newLocalDatabase('rps');
+  private local = newLocalDatabase('rnrps');
   private remote = new PouchDB('https://juliencalixte.ddns.net/database/rps');
   private sync: PouchDB.Replication.Sync<{}> | null = null;
 
@@ -62,7 +62,6 @@ class Repository {
   public liveGame(id: string): void {
     this.cancelLive();
     const ids = [`${id}_${Player.Player1}`, `${id}_${Player.Player2}`];
-    console.table(ids);
     this.sync = this.local
       .sync<{}>(this.remote, {
         live: true,
