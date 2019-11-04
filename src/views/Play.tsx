@@ -6,6 +6,7 @@ import IPlay from '../models/IPlay';
 import {NavigationInjectedProps} from 'react-navigation';
 import repository from '../repository';
 import {store} from '../store';
+import {RockPaperScissors} from '../components/RockPaperScissors';
 
 export const Play: FunctionComponent<NavigationInjectedProps> = ({
   navigation,
@@ -17,8 +18,11 @@ export const Play: FunctionComponent<NavigationInjectedProps> = ({
     const playFromDb = await PlayService.get(id);
     setPlay(playFromDb);
 
-    if (playFromDb && !playFromDb.player2) {
+    if (!store.uuid) {
       store.generateUuid();
+    }
+
+    if (playFromDb && !playFromDb.player2) {
       await PlayService.joinPlay(id, store.uuid);
     }
   };
@@ -35,7 +39,8 @@ export const Play: FunctionComponent<NavigationInjectedProps> = ({
 
   return (
     <SafeAreaView>
-      <Text>{JSON.stringify(play)}</Text>
+      {play && <RockPaperScissors id={id} play={play} />}
+      {!play && <Text>Loading...</Text>}
     </SafeAreaView>
   );
 };
