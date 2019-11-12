@@ -4,15 +4,51 @@ import {Play} from './src/views/Play';
 import {createAppContainer, NavigationInjectedProps} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {TextInput, Button} from 'react-native-paper';
+import {store} from './src/store';
+import PlayService from './src/services/PlayService';
 
 const Home: FunctionComponent<NavigationInjectedProps> = ({navigation}) => {
   const [id, setId] = useState('');
 
-  const play = () => {
+  const joinPlay = async () => {
     if (!id) {
       return;
     }
-    navigation.navigate('Play', {id: id.toLowerCase()});
+
+    let uuid = store.uuid;
+    if (!uuid) {
+      uuid = store.generateUuid();
+    }
+
+    const idLowerCase = id.toLowerCase();
+    const play = await PlayService.joinPlay(idLowerCase, uuid);
+    if (play) {
+      navigation.navigate('Play', {id: idLowerCase});
+    }
+  };
+
+  const play = async () => {
+    if (!id) {
+      return;
+    }
+
+    const idLowerCase = id.toLowerCase();
+    const play = await PlayService.getRemote(idLowerCase);
+
+    if (play) {
+      joinPlay();
+      return;
+    }
+
+    let uuid = store.uuid;
+    if (!uuid) {
+      uuid = store.generateUuid();
+    }
+
+    const ok = await PlayService.add(uuid, idLowerCase);
+    if (ok) {
+      navigation.navigate('Play', {id: idLowerCase});
+    }
   };
 
   return (

@@ -9,9 +9,12 @@ class ObservableStore {
   public uuid: string = '';
 
   public generateUuid() {
-    if (!this.uuid) {
-      this.uuid = uuid();
+    let uniqueId = this.uuid;
+    if (!uniqueId) {
+      uniqueId = uuid();
+      this.uuid = uniqueId;
     }
+    return this.uuid;
   }
 }
 

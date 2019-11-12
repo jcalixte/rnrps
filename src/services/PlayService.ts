@@ -11,6 +11,7 @@ interface Aggregation {
 
 class PlayService {
   public async add(userId: string, id?: string): Promise<string | null> {
+    id = (id || '').toLowerCase();
     if (id) {
       const remotePlay = await repository.getRemote<IPlay>(id);
       if (remotePlay) {
@@ -31,6 +32,7 @@ class PlayService {
   }
 
   public async joinPlay(id: string, userId: string): Promise<IPlay | null> {
+    id = id.toLowerCase();
     const play = await repository.getRemote<IPlay>(
       this.addSuffix(id, Player.Player1),
     );
@@ -60,6 +62,22 @@ class PlayService {
         this.addSuffix(id, Player.Player1),
       );
       const play2 = await repository.get<IPlay>(
+        this.addSuffix(id, Player.Player2),
+      );
+
+      return this.mergePlays(play1, play2);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  public async getRemote(id: string): Promise<IPlay | null> {
+    id = id.toLowerCase();
+    try {
+      const play1 = await repository.getRemote<IPlay>(
+        this.addSuffix(id, Player.Player1),
+      );
+      const play2 = await repository.getRemote<IPlay>(
         this.addSuffix(id, Player.Player2),
       );
 

@@ -114,65 +114,67 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
   }, [play]);
 
   return (
-    <SafeAreaView>
-      <View>
-        <View style={styles.container}>
-          <View style={styles.playerContainer}>
-            {isSpectator() && (
-              <Title numberOfLines={2}>
-                Player 1 {hasPlayer1Played && 'played!'}
-              </Title>
-            )}
-            {isPlayer1 && <Title numberOfLines={2}>you!</Title>}
-            {isPlayer2 && (
-              <Title numberOfLines={2}>
-                opponent {hasPlayer1Played && 'played!'}
-              </Title>
-            )}
-            <View>
-              <Text>{player1Score}</Text>
-            </View>
-            <RPSCommand
-              id={id}
-              canPlay={isPlayer1}
-              raise={isPlayer1}
-              value={play1}
-              onPlay={setPlay1}
-            />
+    <View style={styles.baseContainer}>
+      <View style={styles.container}>
+        <View style={styles.playerContainer}>
+          {isSpectator() && (
+            <Title numberOfLines={2}>
+              Player 1 {hasPlayer1Played && 'played!'}
+            </Title>
+          )}
+          {isPlayer1 && <Title numberOfLines={2}>you!</Title>}
+          {isPlayer2 && (
+            <Title numberOfLines={2}>
+              opponent {hasPlayer1Played && 'played!'}
+            </Title>
+          )}
+          <View>
+            <Text>{player1Score}</Text>
           </View>
-          <View style={styles.playerContainer}>
-            {isSpectator() && (
-              <Title numberOfLines={2}>
-                Player 2 {hasPlayer2Played && 'played!'}
-              </Title>
-            )}
-            {isPlayer1 && (
-              <Title numberOfLines={2}>
-                opponent {hasPlayer2Played && 'played!'}
-              </Title>
-            )}
-            {isPlayer2 && <Title numberOfLines={2}>you!</Title>}
-            <View>
-              <Text>{player2Score}</Text>
-            </View>
-            <RPSCommand
-              id={id}
-              canPlay={isPlayer2}
-              raise={isPlayer2}
-              value={play2}
-              onPlay={setPlay2}
-            />
-          </View>
+          <RPSCommand
+            id={id}
+            canPlay={isPlayer1}
+            raise={isPlayer1}
+            value={play1}
+            onPlay={setPlay1}
+          />
         </View>
-        <View>
-          <RPSTurn turns={play.turns} />
+        <View style={styles.playerContainer}>
+          {isSpectator() && (
+            <Title numberOfLines={2}>
+              Player 2 {hasPlayer2Played && 'played!'}
+            </Title>
+          )}
+          {isPlayer1 && (
+            <Title numberOfLines={2}>
+              opponent {hasPlayer2Played && 'played!'}
+            </Title>
+          )}
+          {isPlayer2 && <Title numberOfLines={2}>you!</Title>}
+          <View>
+            <Text>{player2Score}</Text>
+          </View>
+          <RPSCommand
+            id={id}
+            canPlay={isPlayer2}
+            raise={isPlayer2}
+            value={play2}
+            onPlay={setPlay2}
+          />
         </View>
       </View>
-    </SafeAreaView>
+      <View>
+        <RPSTurn turns={play.turns} />
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  baseContainer: {
+    flex: 1,
+    width: '100%',
+  },
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
