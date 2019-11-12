@@ -12,7 +12,7 @@ class Repository {
   private remote = new PouchDB('https://juliencalixte.ddns.net/database/rps');
   private sync: PouchDB.Replication.Sync<{}> | null = null;
 
-  public async add(doc: IDocument): Promise<boolean> {
+  public async saveRemote(doc: IDocument): Promise<boolean> {
     try {
       const response = await this.remote.put(doc);
       return response.ok;

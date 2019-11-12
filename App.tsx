@@ -20,10 +20,10 @@ const Home: FunctionComponent<NavigationInjectedProps> = ({navigation}) => {
       uuid = store.generateUuid();
     }
 
-    const idLowerCase = id.toLowerCase();
-    const play = await PlayService.joinPlay(idLowerCase, uuid);
+    const play = await PlayService.joinPlay(id, uuid);
+    console.log('join play', {id, play});
     if (play) {
-      navigation.navigate('Play', {id: idLowerCase});
+      navigation.navigate('Play', {id});
     }
   };
 

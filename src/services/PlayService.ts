@@ -45,7 +45,8 @@ class PlayService {
     }
     play.player2 = userId;
 
-    const result = await repository.save(play);
+    const result = await repository.saveRemote(play);
+    console.log('join play, play service', {result, play});
     const secondPlayerPlay: IPlay = {
       ...play,
       _id: this.addSuffix(id, Player.Player2),
@@ -57,6 +58,7 @@ class PlayService {
   }
 
   public async get(id: string): Promise<IPlay | null> {
+    id = id.toLowerCase();
     try {
       const play1 = await repository.get<IPlay>(
         this.addSuffix(id, Player.Player1),
@@ -124,6 +126,7 @@ class PlayService {
   }
 
   public async setPlay(id: string, player: Player, hand: Hand | null) {
+    id = id.toLowerCase();
     const play = await repository.get<IPlay>(this.addSuffix(id, player));
 
     if (!play) {
