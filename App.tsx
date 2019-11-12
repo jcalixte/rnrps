@@ -17,27 +17,35 @@ const Home: FunctionComponent<NavigationInjectedProps> = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image source={require('./src/assets/logo.png')} />
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <View>
-          <TextInput
-            value={id}
-            onChangeText={setId}
-            label="Join a game"
-            returnKeyType="search"
-            onSubmitEditing={play}
-          />
-          <Button onPress={play}>Play</Button>
-        </View>
-      </ScrollView>
+      <Image source={require('./src/assets/logo.png')} style={styles.image} />
+      <View style={styles.scrollView}>
+        <TextInput
+          value={id}
+          onChangeText={setId}
+          label="Join a game"
+          returnKeyType="search"
+          onSubmitEditing={play}
+        />
+        <Button onPress={play}>Play</Button>
+      </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    width: '100%',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: 50,
+    height: 50,
+    margin: 15,
   },
 });
 

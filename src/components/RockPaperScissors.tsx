@@ -115,15 +115,19 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
 
   return (
     <SafeAreaView>
-      <View style={{height: '100%'}}>
+      <View>
         <View style={styles.container}>
           <View style={styles.playerContainer}>
             {isSpectator() && (
-              <Title>Player 1 {hasPlayer1Played && 'played!'}</Title>
+              <Title numberOfLines={2}>
+                Player 1 {hasPlayer1Played && 'played!'}
+              </Title>
             )}
-            {isPlayer1 && <Title>you!</Title>}
+            {isPlayer1 && <Title numberOfLines={2}>you!</Title>}
             {isPlayer2 && (
-              <Title>opponent {hasPlayer1Played && 'played!'}</Title>
+              <Title numberOfLines={2}>
+                opponent {hasPlayer1Played && 'played!'}
+              </Title>
             )}
             <View>
               <Text>{player1Score}</Text>
@@ -138,12 +142,16 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
           </View>
           <View style={styles.playerContainer}>
             {isSpectator() && (
-              <Title>Player 2 {hasPlayer2Played && 'played!'}</Title>
+              <Title numberOfLines={2}>
+                Player 2 {hasPlayer2Played && 'played!'}
+              </Title>
             )}
             {isPlayer1 && (
-              <Title>opponent {hasPlayer2Played && 'played!'}</Title>
+              <Title numberOfLines={2}>
+                opponent {hasPlayer2Played && 'played!'}
+              </Title>
             )}
-            {isPlayer2 && <Title>you!</Title>}
+            {isPlayer2 && <Title numberOfLines={2}>you!</Title>}
             <View>
               <Text>{player2Score}</Text>
             </View>
@@ -167,9 +175,9 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
+    flex: 1,
   },
   playerContainer: {
     flex: 1,

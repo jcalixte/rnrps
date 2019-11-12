@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useEffect, useState} from 'react';
-import {Text, SafeAreaView} from 'react-native';
+import {Text, SafeAreaView, StyleSheet, Image, View} from 'react-native';
 import bus, {SYNC_UP} from '../utils/bus';
 import PlayService from '../services/PlayService';
 import IPlay from '../models/IPlay';
@@ -7,6 +7,8 @@ import {NavigationInjectedProps} from 'react-navigation';
 import repository from '../repository';
 import {store} from '../store';
 import {RockPaperScissors} from '../components/RockPaperScissors';
+import {Button} from 'react-native-paper';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export const Play: FunctionComponent<NavigationInjectedProps> = ({
   navigation,
@@ -38,9 +40,29 @@ export const Play: FunctionComponent<NavigationInjectedProps> = ({
   }, []);
 
   return (
-    <SafeAreaView>
-      {play && <RockPaperScissors id={id} play={play} />}
+    <SafeAreaView style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.image}>
+        <Image source={require('../assets/logo.png')} />
+      </TouchableOpacity>
+      <View style={styles.container}>
+        {play && <RockPaperScissors id={id} play={play} />}
+      </View>
       {!play && <Text>Loading...</Text>}
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  image: {
+    width: 50,
+    height: 50,
+    margin: 15,
+  },
+});
