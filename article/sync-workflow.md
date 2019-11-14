@@ -11,6 +11,9 @@
    ```
    - The app right after syncs with the server and saves the document
    - Player 1 waits for a Player 2 to come by listening to any updates from the server of documents with ids "12345-player1" and "12345-player2"
+
+![Step 1](./assets/sync-workflow-step-1.png)
+
 2. Player 2 joins the play
    - Player 2 joins the play by fetching and updating the player 1's with his uuid in 'player2' attribute.
    - Player 2 creates a local document
