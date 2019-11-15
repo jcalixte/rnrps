@@ -11,7 +11,6 @@ interface Aggregation {
 
 class PlayService {
   public async add(userId: string, id?: string): Promise<string | null> {
-    id = (id || '').toLowerCase();
     if (id) {
       const remotePlay = await repository.getRemote<IPlay>(id);
       if (remotePlay) {
@@ -32,7 +31,6 @@ class PlayService {
   }
 
   public async joinPlay(id: string, userId: string): Promise<IPlay | null> {
-    id = id.toLowerCase();
     const play = await repository.getRemote<IPlay>(
       this.addSuffix(id, Player.Player1),
     );
@@ -45,8 +43,8 @@ class PlayService {
     }
     play.player2 = userId;
 
-    const result = await repository.saveRemote(play);
-    console.log('join play, play service', {result, play});
+    const saveOk = await repository.saveRemote(play);
+
     const secondPlayerPlay: IPlay = {
       ...play,
       _id: this.addSuffix(id, Player.Player2),
@@ -54,11 +52,10 @@ class PlayService {
     };
     await repository.save(secondPlayerPlay);
 
-    return result ? play : null;
+    return saveOk ? play : null;
   }
 
   public async get(id: string): Promise<IPlay | null> {
-    id = id.toLowerCase();
     try {
       const play1 = await repository.get<IPlay>(
         this.addSuffix(id, Player.Player1),
@@ -74,7 +71,6 @@ class PlayService {
   }
 
   public async getRemote(id: string): Promise<IPlay | null> {
-    id = id.toLowerCase();
     try {
       const play1 = await repository.getRemote<IPlay>(
         this.addSuffix(id, Player.Player1),
@@ -126,7 +122,6 @@ class PlayService {
   }
 
   public async setPlay(id: string, player: Player, hand: Hand | null) {
-    id = id.toLowerCase();
     const play = await repository.get<IPlay>(this.addSuffix(id, player));
 
     if (!play) {

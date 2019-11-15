@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useState, useEffect} from 'react';
-import IPlay from '../models/IPlay';
+import IPlay, {ITurn} from '../models/IPlay';
 import {View, StyleSheet, SafeAreaView} from 'react-native';
 import {store} from '../store';
 import Hand from '../enums/Hand';
@@ -23,24 +23,14 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
   const [play2, setPlay2] = useState<Hand | null>(null);
   const [player1Score, setPlayer1Score] = useState(0);
   const [player2Score, setPlayer2Score] = useState(0);
-
-  const lastTurn = () => {
-    const turns = play.turns;
-    return [...turns].pop() || null;
-  };
-
-  const isPlayer1 = play.player1 === uuid;
-
-  const isPlayer2 = play.player2 === uuid;
+  const [isPlayer1, setIsPlayer1] = useState(false);
+  const [isPlayer2, setIsPlayer2] = useState(false);
+  const [isSpectator, setIsSpectator] = useState(false);
+  const [lastTurn, setLastTurn] = useState<ITurn | null>(null);
 
   const hasPlayer1Played = !isPlayer1 && play1 !== null;
 
   const hasPlayer2Played = !isPlayer2 && play2 !== null;
-
-  const isSpectator = () => {
-    const {player1, player2} = play;
-    return ![player1, player2].includes(uuid);
-  };
 
   const playerNumber = () => {
     switch (uuid) {
@@ -63,19 +53,21 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
   };
 
   const updatePlay = async () => {
-    const lTurn = lastTurn();
-    if (!lTurn) {
+    if (!lastTurn) {
       return;
     }
     if (isPlayer2) {
-      setPlay1(lTurn[Player.Player1]);
+      setPlay1(lastTurn[Player.Player1]);
     }
 
     if (isPlayer1) {
-      setPlay2(lTurn[Player.Player2]);
+      setPlay2(lastTurn[Player.Player2]);
     }
 
-    if (lTurn[Player.Player1] === null && lTurn[Player.Player2] === null) {
+    if (
+      lastTurn[Player.Player1] === null &&
+      lastTurn[Player.Player2] === null
+    ) {
       setPlay1(null);
       setPlay2(null);
     }
@@ -102,6 +94,22 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
     await PlayService.setPlay(id, Player.Player2, play2);
   };
 
+  const initPlayerRoles = () => {
+    if (!play) {
+      return;
+    }
+
+    const {player1, player2} = play;
+    setIsSpectator(![player1, player2].includes(uuid));
+    setIsPlayer1(player1 === uuid);
+    setIsPlayer2(player2 === uuid);
+  };
+
+  const updateLastTurn = () => {
+    const last = [...play.turns].pop() || null;
+    setLastTurn(last);
+  };
+
   useEffect(updatePlayerScores, [play]);
   useEffect(() => {
     updatePlayAfterPlay1();
@@ -111,13 +119,15 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
   }, [play2]);
   useEffect(() => {
     updatePlay();
+    initPlayerRoles();
+    updateLastTurn();
   }, [play]);
 
   return (
     <View style={styles.baseContainer}>
       <View style={styles.container}>
         <View style={styles.playerContainer}>
-          {isSpectator() && (
+          {isSpectator && (
             <Title numberOfLines={2}>
               Player 1 {hasPlayer1Played && 'played!'}
             </Title>
@@ -140,7 +150,7 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
           />
         </View>
         <View style={styles.playerContainer}>
-          {isSpectator() && (
+          {isSpectator && (
             <Title numberOfLines={2}>
               Player 2 {hasPlayer2Played && 'played!'}
             </Title>

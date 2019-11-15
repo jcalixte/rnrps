@@ -32,8 +32,7 @@ const Home: FunctionComponent<NavigationInjectedProps> = ({navigation}) => {
       return;
     }
 
-    const idLowerCase = id.toLowerCase();
-    const play = await PlayService.getRemote(idLowerCase);
+    const play = await PlayService.getRemote(id);
 
     if (play) {
       joinPlay();
@@ -45,9 +44,9 @@ const Home: FunctionComponent<NavigationInjectedProps> = ({navigation}) => {
       uuid = store.generateUuid();
     }
 
-    const ok = await PlayService.add(uuid, idLowerCase);
+    const ok = await PlayService.add(uuid, id);
     if (ok) {
-      navigation.navigate('Play', {id: idLowerCase});
+      navigation.navigate('Play', {id});
     }
   };
 
@@ -57,7 +56,7 @@ const Home: FunctionComponent<NavigationInjectedProps> = ({navigation}) => {
       <View style={styles.scrollView}>
         <TextInput
           value={id}
-          onChangeText={setId}
+          onChangeText={i => setId((i || '').toLowerCase())}
           label="Join a game"
           returnKeyType="search"
           onSubmitEditing={play}
