@@ -27,6 +27,9 @@
    }
    ```
    - Player 2's app syncs with the database and saves the two documents
+
+![Step 1](./assets/sync-workflow-step-2.png)
+
 3. The play is ready
    - Player 1 gets the updates and is now ready to play the first round
    - Player 1 and player 2 save their document locally and then share them with the server. That way every player receive the update of their opponent.
