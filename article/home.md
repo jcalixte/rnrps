@@ -3,13 +3,13 @@
 ## SYNCHRONISATION EN DIRECT
 
 Une fonctionnalité très appréciée pour des utilisateurs c'est la possibilité de partager des données, documents ou de jouer en direct avec d'autres utilisateurs.
-Pour se faire il faut passer par plusieurs étapes :
+Pour se faire techniquement, il faut passer par plusieurs étapes :
 
 1. Gérer des connexions WebSockets,
-2. mettre à jour les documents sans écraser des modifications d'un des deux joueurs,
+2. mettre à jour les documents sans écraser les modifications des utilisateurs,
 3. la partager à l'ensemble des contributeurs via les WebSockets.
 
-Rien d'immédiat.
+Rien d'évident.
 
 Dans cet article, nous allons réaliser un jeu de Pierre Feuille Ciseau qui gère justement toutes ces problématiques, et cela, sans avoir à gérer une partie backend ! Grâce à CouchDb. À la fin de ce billet, nous aurons une application React Native connectée à une base de données CouchDb locale qui fonctionnera du tonerre.
 
