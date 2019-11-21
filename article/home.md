@@ -94,6 +94,10 @@ Maintenant il faut être capable de rendre ces deux documents utilisables dans l
 
 La clé de voûte de notre système de synchronisation en direct est la méthode de Pouchdb.sync. Cette méthode permet de pousser les modifications de notre base de données locales verse serveur, puis de récupérer les changements depuis le serveur vers la base locale. Si en plus nous rajoutons la propriété « live: true », alors, ces changements sont transmis directement grâce à des web sockets initialisés automatiquement. Alors, nous ne voulons pas tout suivre en direct, non non. Seulement la partie en cours, c'est pour cela que nous utilisons l'id passé en paramètre pour demander au serveur de filtrer ce qui doit être synchroniser, il y a d'autre manière de faire mais cette méthode nous convient parfaitement et c'est la plus rapide de toute. Voici donc la règle, toute récupération ou modification se fait sur le serveur local, puis nous laissons faire la méthode Sync qui s'assure de nous enregistrer le document sur le serveur.
 
+Here a quick demo!
+
+![demonstration](./assets/demo.gif)
+
 ### Et si jamais il y a un conflit ?
 
 Bonne question ! Que se passe-t-il si les deux joueurs modifient la même partie en même temps ? Eh bien ce sera le sujet d'un autre article où nous parlerons également de synchronisation entre deux longues sessions hors-ligne plus promptes à engendrer des conflits.
