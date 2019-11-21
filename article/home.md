@@ -11,7 +11,7 @@ Pour se faire techniquement, il faut passer par plusieurs étapes :
 
 Rien d'évident.
 
-Dans cet article, nous allons réaliser un jeu de Pierre Feuille Ciseau qui gère justement toutes ces problématiques, et cela, sans avoir à gérer une partie backend ! Grâce à CouchDb. À la fin de ce billet, nous aurons une application React Native connectée à une base de données CouchDb locale qui fonctionnera du tonerre.
+Dans cet article, nous allons réaliser un jeu de Pierre Feuille Ciseau qui gère justement toutes ces problématiques, et cela, sans avoir à gérer une partie backend ! Grâce à CouchDb. À la fin de ce billet, nous aurons une application React Native connectée à une base de données CouchDb locale qui fonctionnera du tonnerre.
 
 On voit ça ensemble ? C'est parti !
 
