@@ -11,8 +11,10 @@ interface Aggregation {
 
 class PlayService {
   public async add(userId: string, id?: string): Promise<string | null> {
+    console.log({userId, id});
     if (id) {
       const remotePlay = await repository.getRemote<IPlay>(id);
+      console.log({remotePlay});
       if (remotePlay) {
         return null;
       }

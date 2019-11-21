@@ -39,12 +39,20 @@ const Home: FunctionComponent<NavigationInjectedProps> = ({navigation}) => {
       return;
     }
 
+    const localPlay = await PlayService.get(id);
+
+    if (localPlay) {
+      navigation.navigate('Play', {id});
+      return;
+    }
+
     let uuid = store.uuid;
     if (!uuid) {
       uuid = store.generateUuid();
     }
 
     const ok = await PlayService.add(uuid, id);
+    console.log({ok});
     if (ok) {
       navigation.navigate('Play', {id});
     }

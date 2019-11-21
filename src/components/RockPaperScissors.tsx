@@ -56,20 +56,18 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
     if (!lastTurn) {
       return;
     }
-    if (isPlayer2) {
-      setPlay1(lastTurn[Player.Player1]);
-    }
-
-    if (isPlayer1) {
-      setPlay2(lastTurn[Player.Player2]);
-    }
 
     if (
       lastTurn[Player.Player1] === null &&
       lastTurn[Player.Player2] === null
     ) {
+      console.log('Reset plays');
       setPlay1(null);
       setPlay2(null);
+    } else if (isPlayer2) {
+      setPlay1(lastTurn[Player.Player1]);
+    } else if (isPlayer1) {
+      setPlay2(lastTurn[Player.Player2]);
     }
 
     const pNumber = playerNumber();
