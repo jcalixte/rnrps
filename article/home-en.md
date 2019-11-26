@@ -2,15 +2,8 @@
 
 ## Intro
 
-One of the possibilities users really enjoy is to be able to share data, documents or play live with other users.
-
-We can do that by achieving some steps:
-
-1. Manage Web Sockets connections,
-2. Update documents without erase users' modifications,
-3. Share to all contributors.
-
-Not so easy.
+Let's make a game! A game where players can fight against each other in live. A game where there are strategic moves and only the best wins. Let's make a `Rock - Paper - Scissors` game. What? 🙂
+By the way, this game will be a good opportunity to see how to build live data syncs in React Native with CouchDb. Of course, there are many more use cases with these two technologies.
 
 In this article, we will develop a game Rock-Paper-Scissors who can manage all of this, and, without doing any backend! Thanks to CouchDb! At the end, we will have a React Native app connected to a local CouchDb database.
 
