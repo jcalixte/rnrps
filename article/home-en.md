@@ -5,7 +5,7 @@
 Let's make a game! A game where players can fight against each other in live. A game where there are strategic moves and only the best wins. Let's make a `Rock - Paper - Scissors` game. What? 🙂
 By the way, this game will be a good opportunity to see how to build live data syncs in React Native with CouchDb. Of course, there are many more use cases with these two technologies.
 
-In this article, we will develop a game Rock-Paper-Scissors who can manage all of this, and, without doing any backend! Thanks to CouchDb! At the end, we will have a React Native app connected to a local CouchDb database.
+In this article, we will develop a game Rock-Paper-Scissors who can manage all of this, and thanks to CouchDb, without doing any backend! At the end, we will have a React Native app connected to a local CouchDb database.
 
 Ready? Set. Go!
 
