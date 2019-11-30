@@ -45,6 +45,15 @@ If CouchDb is able to store data in a server, PouchDb helps us manipulate data i
 
 [PouchDb Documentation](https://pouchdb.com/guides/replication.html)
 
-#### Let's dive into the code!
+## Let's dive into the code!
 
 [Code explanation](./code-en.md)
+
+## Conclusion
+
+So we've completed our first live sync between two databases in React Native, awesome! There is so much more we can explore now. Here a few examples:
+
+- create an offline first experience app to provide a seemless usage either the app is online or offline.
+- create an app that share data in Bluetooth without the need of an Internet connection (like shareable books in region where Internet is expansive)
+- create an app where people can collaborate in live.
+- and so on...
