@@ -20,7 +20,7 @@ Two players will play the famous Rock-Paper-Scissors and join a game with its id
 
 Here a demo of what a player will experiment.
 
-[Demo](./assets/rps-demo.gif)
+![Demo](./assets/rps-demo.gif)
 
 First steps is to clone the [repo](https://github.com/jcalixte/rnrps/), run the command `yarn` and rename the `.env.example` in `.env`.
 
