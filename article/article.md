@@ -34,7 +34,7 @@ CouchDb is a NoSQL database accessible via a RESTFUL API. The particularity is t
 
 CouchDb masters in database replications. As it is possible to know what has been modified by an `_id` and a `_rev` prop, it is easy for a database de to know the delta and replicate from another one. What is important for us will be the replication of a distant database to a local one.
 
-[CouchDb Documentation](https://guide.couchdb.org/)
+[CouchDb Documentation](https://docs.couchdb.org/en/stable/)
 
 For our game we need to install it locally.
 
