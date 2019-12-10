@@ -15,7 +15,7 @@ Ready? Set. Go!
 
 What will do exactly our online game?
 
-Two players will play the famous Rock-Paper-Scissors just by an id. Other users will be able to join the game and be spectators. Theses games will update whenever a player plays a roud. Finally, we will display the scores.
+Two players will play the famous Rock-Paper-Scissors and join a game with its id. Other users will be able to join the game and be spectators. Theses games will update whenever a player plays a roud. Finally, we will display the score.
 
 First steps is to clone the [repo](https://github.com/jcalixte/rnrps/), run the command `yarn` and rename the `.env.example` in `.env`.
 
