@@ -7,7 +7,6 @@ import {NavigationInjectedProps} from 'react-navigation';
 import repository from '../repository';
 import {store} from '../store';
 import {RockPaperScissors} from '../components/RockPaperScissors';
-import {Button} from 'react-native-paper';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export const Play: FunctionComponent<NavigationInjectedProps> = ({

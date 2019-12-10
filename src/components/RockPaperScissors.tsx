@@ -26,7 +26,6 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
   const [isPlayer1, setIsPlayer1] = useState(false);
   const [isPlayer2, setIsPlayer2] = useState(false);
   const [isSpectator, setIsSpectator] = useState(false);
-  const [lastTurn, setLastTurn] = useState<ITurn | null>(null);
 
   const hasPlayer1Played = !isPlayer1 && play1 !== null;
 
@@ -53,6 +52,7 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
   };
 
   const updatePlay = async () => {
+    const lastTurn = [...play.turns].pop() || null;
     if (!lastTurn) {
       return;
     }
@@ -61,7 +61,6 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
       lastTurn[Player.Player1] === null &&
       lastTurn[Player.Player2] === null
     ) {
-      console.log('Reset plays');
       setPlay1(null);
       setPlay2(null);
     } else if (isPlayer2) {
@@ -103,11 +102,6 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
     setIsPlayer2(player2 === uuid);
   };
 
-  const updateLastTurn = () => {
-    const last = [...play.turns].pop() || null;
-    setLastTurn(last);
-  };
-
   useEffect(updatePlayerScores, [play]);
   useEffect(() => {
     updatePlayAfterPlay1();
@@ -118,7 +112,6 @@ const RockPaperScissors: FunctionComponent<RockPaperScissorsProps> = ({
   useEffect(() => {
     updatePlay();
     initPlayerRoles();
-    updateLastTurn();
   }, [play]);
 
   return (

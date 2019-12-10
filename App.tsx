@@ -21,7 +21,7 @@ const Home: FunctionComponent<NavigationInjectedProps> = ({navigation}) => {
     }
 
     const play = await PlayService.joinPlay(id, uuid);
-    console.log('join play', {id, play});
+
     if (play) {
       navigation.navigate('Play', {id});
     }
@@ -52,7 +52,7 @@ const Home: FunctionComponent<NavigationInjectedProps> = ({navigation}) => {
     }
 
     const ok = await PlayService.add(uuid, id);
-    console.log({ok});
+
     if (ok) {
       navigation.navigate('Play', {id});
     }
