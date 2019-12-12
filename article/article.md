@@ -58,8 +58,6 @@ Then, go to the "Databases" tab and create de database called `rps`.
 
 If CouchDb is able to store data in a server, PouchDb helps us manipulate data in locale database the same way as CouchDb! This is awesome! We will implement the same methods for locale and distant database!
 
-`PouchDb` has a very helpful method that is `sync`.
-
 > CouchDB was designed with sync in mind, and this is exactly what it excels at. Many of the rough edges of the API serve this larger purpose. For instance, managing your document revisions pays off in the future, when you eventually need to start dealing with conflicts.
 
 [PouchDb Documentation](https://pouchdb.com/guides/replication.html)
