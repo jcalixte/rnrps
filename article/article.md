@@ -118,12 +118,13 @@ We added an event `SYNC_UP` to make our `React` component reactive. We will list
 
 In a game, each player will update his own document so we will not have to deal with conflicts. But our component just want to handle one document `Play` to display plays and scores. So we have a final work to do, we need to fetch the two documents in the database and merge them into one.
 
-It is done in the file `PlayService.`, we can call this method `mergePlays` where we use a spread operator to merge the two documents. There is a little more work when we want to gather play turns in which each players update their moves. We loop through each `turn`, retrieve the move of the player 1 in the player 1's document and retrieve the move of the player 2 in the player 2's document. Like this:
+It is done in the file `PlayService.`, we can call this method `mergePlays` where we use a spread operator to merge the two documents. But there is a little more work to do when we want to gather play `turns` in which each players update their moves. We loop through each `turn`, retrieve the move of the player 1 in the player 1's document and retrieve the move of the player 2 in the player 2's document. Like this:
 
 ```TypeScript
 // PlayService.ts
 
 private mergePlays(play1: IPlay | null, play2: IPlay | null): IPlay | null {
+  // If one of these two documents is null just return the other one.
   if (!play1 || !play2) {
     return play1 || play2;
   }
@@ -131,6 +132,7 @@ private mergePlays(play1: IPlay | null, play2: IPlay | null): IPlay | null {
     ...play1,
     ...play2,
   };
+
   const turnCount = Math.max(play1.turns.length, play2.turns.length);
 
   if (!turnCount) {
@@ -176,6 +178,7 @@ const getPlay = async () => {
 
   // ...
 
+  // Join the play as Player 2 if there is Player 1 waiting!
   if (playFromDb && !playFromDb.player2) {
     await PlayService.joinPlay(id, store.uuid);
   }
@@ -194,7 +197,7 @@ useEffect(() => {
 
 ## A picture is worth a thousand words
 
-To summarize, here the 3 steps explained in pictures:
+To summarize, here 3 steps explained in pictures:
 
 1. Player 1 creates the play
    - Player 1 saves a local document
