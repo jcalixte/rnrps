@@ -1,16 +1,11 @@
-import {COUCHDB_URL} from 'react-native-dotenv';
 import PouchDB from 'pouchdb-react-native';
 import bus, {SYNC_UP} from '../utils/bus';
 import IDocument from '../models/IDocument';
 import Player from '../enums/Player';
 
-export const newLocalDatabase = (name: string): PouchDB.Database<{}> => {
-  return new PouchDB(name);
-};
-
 class Repository {
-  private local = newLocalDatabase('rnrps');
-  private remote = new PouchDB(COUCHDB_URL);
+  private local = new PouchDB('rnrps');
+  private remote = new PouchDB('http://127.0.0.1:5984/rps');
   private sync: PouchDB.Replication.Sync<{}> | null = null;
 
   public async saveRemote(doc: IDocument): Promise<boolean> {
