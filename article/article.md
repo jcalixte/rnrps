@@ -4,11 +4,11 @@
 
 In this tutorial, I will show you how to create a live game with data updating on multiple devices.
 
-For this, let's make a game! A game where players can fight against each other in live. Let's make a live `Rock - Paper - Scissors` game.
+For this, let's make a game! A game where players can fight against each other in live. Let's make a live `Rock - Paper - Scissors` game. Well, it is already programmed [here](https://github.com/jcalixte/rnrps) so we only see cool stuff 😄.
 
 This project is a perfect opportunity to see how to build live data syncs in React Native with CouchDb. Of course, there are many more use cases with these two technologies but it is a good start.
 
-In this article, we will dive into a game Rock-Paper-Scissors I created previously, and thanks to CouchDb, we do not need to build any backend! At the end, we will have a React Native app connected to a local CouchDb database. The game is already programmed in a repo I created, so we can focus on the essential parts: the live sync & update on our React component. Feel free to explore components to understand how it is displayed.
+Thanks to CouchDb, we do not need to build any backend! At the end, we will have a React Native app connected to a local CouchDb database. With this game, we can focus on the essential parts: the live sync & update on our React component. Feel free to explore components to understand how it is displayed. Let's get ready!
 
 ## 1. Overview
 
@@ -18,11 +18,11 @@ What will do exactly our online game?
 
 Two players will play the famous Rock-Paper-Scissors and join a game with its id. Other users will be able to join the game and be spectators. Theses games will update whenever a player plays a roud. Finally, we will display the score.
 
-Here a demo of what a player will see.
+Here a quick demo of what a player will see.
 
 ![Demo](./assets/rps-demo.gif)
 
-First steps is to clone the [repo](https://github.com/jcalixte/rnrps/), run the command `yarn` and rename the `.env.example` in `.env`.
+First steps is to clone the [repo](https://github.com/jcalixte/rnrps), run the command `yarn`.
 
 ### What is CouchDb
 
@@ -54,11 +54,13 @@ Then, go to the "Databases" tab and create de database called `rps`.
 
 ![Name Database](./assets/name-db.png)
 
+#### Install CouchDb in React Native
+
+Simple! Only do a `yarn add pouchdb-react-native` and we're done!
+
 #### PouchDb
 
-If CouchDb is able to store data in a server, PouchDb helps us manipulate data in locale database the same way as CouchDb! This is awesome! We will implement the same methods for locale and distant database!
-
-> CouchDB was designed with sync in mind, and this is exactly what it excels at. Many of the rough edges of the API serve this larger purpose. For instance, managing your document revisions pays off in the future, when you eventually need to start dealing with conflicts.
+If CouchDb is able to store data in a server, PouchDb helps us manipulate data in locale database. PouchDb is really close to CouchDb, indeed, they share the same API! This is really cool!
 
 [PouchDb Documentation](https://pouchdb.com/guides/replication.html)
 
@@ -66,18 +68,22 @@ If CouchDb is able to store data in a server, PouchDb helps us manipulate data i
 
 ### Sync
 
-We want to share in real time a document `Play`. How to do so? We are going to replicate the local database and the database from the server. PouchDb has a really good method for it called `sync` and it is used like this : `localDB.sync(remoteDB)`. This method is a shortcut for :
+We want to share in real time a document `Play`. How to do so? We are going to replicate the local database and the database from the server. PouchDb has a really good method for it called `sync`. If there is one reason to use PouchDb, this is the `sync` method! Take a look at a quote from PouchDb documention:
+
+> CouchDB was designed with sync in mind, and this is exactly what it excels at. Many of the rough edges of the API serve this larger purpose. For instance, managing your document revisions pays off in the future, when you eventually need to start dealing with conflicts.
+
+It is used like this : `localDB.sync(remoteDB)`. Actualy, this method is a shortcut for :
 
 ```TypeScript
 localDB.replicate.to(remoteDB);
 localDB.replicate.from(remoteDB);
 ```
 
-`sync` has options, and if we adapt it for our game, we want:
+`sync` has options, and if we adapt it for our game we want:
 
 - a live sync so we add the property `sync` to `true`,
-- a synchronisation that persists and retry when there are connection problems so we put the `retry`prop to `true`.
-- We don't want to synchronise the whole database but only the current game! Hopefully, CouchDb and PouchDb can manage that for us with a [filtered replication](https://pouchdb.com/api.html#replication). There are many ways to do a filtered replication but the most efficient is to give to `sync` the array of ids we want to listen to.
+- a synchronisation that persists and retry when there are connection problems. So we put the `retry` prop to `true`.
+- We don't want to synchronise the whole database but only the current game! Hopefully, CouchDb and PouchDb can manage that for us with a [filtered replication](https://pouchdb.com/api.html#replication). There are many ways to do a filtered replication but the most efficient one is to give to `sync` the array of ids we want to listen to.
 
 For more details, I suggest you see the excelent [PouchDb documentation](https://pouchdb.com/guides/replication.html#setting-up-sync)
 
