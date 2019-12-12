@@ -8,7 +8,7 @@ For this, let's make a game! A game where players can fight against each other i
 
 This project is a perfect opportunity to see how to build live data syncs in React Native with CouchDb. Of course, there are many more use cases with these two technologies but it is a good start.
 
-In this article, we will dive into a game Rock-Paper-Scissors I created previously, and thanks to CouchDb, we do not need to build any backend! At the end, we will have a React Native app connected to a local CouchDb database. The game is already ready in a repo I created, so we can focus on the essential parts: the live sync & update on our React component.
+In this article, we will dive into a game Rock-Paper-Scissors I created previously, and thanks to CouchDb, we do not need to build any backend! At the end, we will have a React Native app connected to a local CouchDb database. The game is already programmed in a repo I created, so we can focus on the essential parts: the live sync & update on our React component. Feel free to explore components to understand how it is displayed.
 
 ## 1. Overview
 
@@ -18,7 +18,7 @@ What will do exactly our online game?
 
 Two players will play the famous Rock-Paper-Scissors and join a game with its id. Other users will be able to join the game and be spectators. Theses games will update whenever a player plays a roud. Finally, we will display the score.
 
-Here a demo of what a player will experiment.
+Here a demo of what a player will see.
 
 ![Demo](./assets/rps-demo.gif)
 
@@ -32,7 +32,7 @@ Before getting deep into the app, it seems important to know the techology behin
 
 CouchDb is a NoSQL database accessible via a RESTFUL API. The particularity is that each update of a document (NoSQL data) is a new document linked to its previous versions by a common `_id`. Data in CouchDb are immutables. So, as in git, a historic tree can be made listing all the modification of a document. Each update creates a modification of the property `_rev` like `_rev: 12-ad32d26`, this is the version of the document (`_rev` is for `revision` 🤫).
 
-CouchDb masters in database replications. As it is possible to know what has been modified by an `_id` and a `_rev` prop, it is easy for a database de to know the delta and replicate from another one. What is important for us will be the replication of a distant database to a local one.
+CouchDb masters in database replications. As it is possible to know what has been modified by an `_id` and a `_rev` prop, it is easy for a database to know the delta and replicate from another one. What is important for us will be the replication of a distant database to a local one.
 
 [CouchDb Documentation](https://docs.couchdb.org/en/stable/)
 
@@ -150,6 +150,42 @@ private mergePlays(play1: IPlay | null, play2: IPlay | null): IPlay | null {
   }
   return play;
 }
+```
+
+### The React Native component
+
+After all these operations, it is finally time to display our game in screen. The code below is the page `Play` after the player submit the game id in the home page. We can init the liveGame; telling PouchDb to only sync the documents we need.
+
+When fetching the play if there is no player 2, we join the play 🙂.
+
+We can listen to changes by adding a listener to th `SYNC_UP` event from our PouchDb repository.
+
+```tsx
+// src/views/Play.tsx
+
+const id = navigation.getParam('id') as string;
+const [play, setPlay] = useState<IPlay | null>(null);
+
+const getPlay = async () => {
+  const playFromDb = await PlayService.get(id);
+  setPlay(playFromDb);
+
+  // ...
+
+  if (playFromDb && !playFromDb.player2) {
+    await PlayService.joinPlay(id, store.uuid);
+  }
+};
+
+useEffect(() => {
+  bus.on(SYNC_UP, getPlay);
+  repository.liveGame(id);
+  getPlay();
+
+  return () => {
+    bus.removeListener(SYNC_UP, getPlay);
+  };
+}, []);
 ```
 
 ## A picture is worth a thousand words
