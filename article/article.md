@@ -4,11 +4,11 @@
 
 In this tutorial I will show you how to create a live game with data updating on multiple devices.
 
-Let's start with something fun and basic! A game in which two people will be able to play together online. Let's make a live `Rock - Paper - Scissors` game. Well, I've already programmed it [here](https://github.com/jcalixte/rnrps) so we can focus straight away on the cool stuff 😄.
+Let's start with something fun and basic! A game in which two people will be able to play together online. Let's make a live `Rock - Paper - Scissors` game. I've already programmed it [here](https://github.com/jcalixte/rnrps) so we can focus straight away on the cool stuff 😄.
 
 This is a perfect opportunity to see how to build live data syncs in a mobile app with CouchDb. You'll of course be able to exploit these two technologies in many more use cases but this is a good way to start.
 
-Thanks to CouchDb we don't need to build any backend! By the end, we'll have a React Native app connected to a local CouchDb database. This basic game will help us concentrate on the essentials parts: the live sync & update on our React component. Feel free to explore components to understand how it's displayed. Let's start!
+Thanks to CouchDb we don't need to build any backend! By the end we'll have a React Native app connected to a local CouchDb database. This basic game will help us concentrate on the essentials parts: the live sync & update on our React component. Feel free to explore the components to understand how it's displayed. Let's start!
 
 ## 1. Overview
 
@@ -16,7 +16,7 @@ Thanks to CouchDb we don't need to build any backend! By the end, we'll have a R
 
 What exactly will our online game be able to do?
 
-The famous and popular Rock-Paper-Scissors will be played by two people, joining the game thanks to its id. Other users will also be able to participate and join as spectators. Afer each round, the app will update the game and at the end display the final score.
+The famous and popular Rock-Paper-Scissors will be played by two people who will join the game thanks to its id. Other users will also be able to participate and join as spectators. Afer each round, the app will update the game and at the end display the final score.
 
 Here a quick demo of what a player will see.
 
