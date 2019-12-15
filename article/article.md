@@ -68,7 +68,7 @@ If CouchDb can store data in a server, PouchDb helps us manipulate data in local
 
 ### Sync
 
-We want to share a document `Play` in real-time. How do we do that? We are going to replicate the local database and the database from the server. PouchDb has a really good method for it called `sync`. If there is one reason to use PouchDb it's for the `sync` method! Take a look at a quote from PouchDb documentation:
+We want to share a document `Play` in real-time. How do we do that? We are going to replicate the local database and the database from the server. PouchDb has a really good method for it called `sync`. If there is one reason to use PouchDb it's for the `sync` method! Take a look at this quote from PouchDb documentation:
 
 > CouchDB was designed with sync in mind, and this is exactly what it excels at. Many of the rough edges of the API serve this larger purpose. For instance, managing your document revisions pays off in the future, when you eventually need to start dealing with conflicts.
 
@@ -87,7 +87,7 @@ localDB.replicate.from(remoteDB);
 
 For more details, I recommend this excellent [PouchDb documentation](https://pouchdb.com/guides/replication.html#setting-up-sync)
 
-If we have a look at the whole code, this what we see:
+If we have a look at the whole code, this what we should see:
 
 ```TypeScript
 // Repository/index.ts
@@ -116,7 +116,7 @@ We added an event `SYNC_UP` to make our `React` component reactive. We'll listen
 
 ### Merge
 
-During a game each player will update his own document so we'll not have to deal with conflicts. But our component can only handle one document `Play` to display plays and scores. At this stage we only have one work left to do: to fetch the two documents in the database and merge them into one.
+During a game each player will update his own document so we won't have to deal with conflicts. But our component can only handle one document `Play` to display plays and scores. At this stage we only have one work left to do: to fetch the two documents in the database and merge them into one.
 
 In the file `PlayService.`, we'll call the method `mergePlays` where we use a spread operator to merge the two documents. But there is a little more work to do when we want to gather play `turns` (in which each player updates their moves). For each `turn`, we retrieve the move of the player 1 in the player 1's document and the move of the player 2 in the player 2's document. Like this:
 
