@@ -4,19 +4,19 @@
 
 In this tutorial, I will show you how to create a live game with data updating on multiple devices.
 
-For this, let's make a game! A game where players can fight against each other in live. Let's make a live `Rock - Paper - Scissors` game. Well, it is already programmed [here](https://github.com/jcalixte/rnrps), so we only see cool stuff 😄.
+Let's start with a game! A game in which players are able to play together in live. Let's make a live `Rock - Paper - Scissors` game. Well, I've already programmed it [here](https://github.com/jcalixte/rnrps) so we can focus straight away on the cool stuff 😄.
 
-This is a perfect opportunity to see how to build live data syncs in a mobile app with CouchDb. Of course, there are many more use cases with these two technologies but it is a good start.
+This is a perfect opportunity to see how to build live data syncs in a mobile app with CouchDb. Of course, you'll be able to exploit these two technologies in many more use cases but this is a good way to start.
 
-Thanks to CouchDb, we do not need to build any backend! In the end, we will have a React Native app connected to a local CouchDb database. With this game, we can focus on the essential parts: the live sync & update on our React component. Feel free to explore components to understand how it is displayed. Let's get ready!
+Thanks to CouchDb, we do not need to build any backend! In the end, we will have a React Native app connected to a local CouchDb database. This basic game will help us concentrate on the essentials parts: the live sync & update on our React component. Feel free to explore components to understand how it is displayed. Let's get ready!
 
 ## 1. Overview
 
 ### Rock-Paper-Scissors
 
-What will do exactly our online game?
+What exactly will our online game be able to do?
 
-Two players will play the famous Rock-Paper-Scissors and join a game with its id. Other users will be able to join the game and be spectators. These games will update whenever a player plays a round. Finally, we will display the score.
+The famous and popular Rock-Paper-Scissors will be played by two people, joining with the game's id. Other users will also be able to join the game as spectators. Each round, the app will update the game and at the end display the final score.
 
 Here a quick demo of what a player will see.
 
@@ -26,17 +26,17 @@ First steps are to clone the [repo](https://github.com/jcalixte/rnrps) and simpl
 
 ### What is CouchDb
 
-Before getting deep into the app, it seems primordial to know the technology behind.
+Before getting deeper into the app, it seems primordial to first know the tech behind it.
 
 #### CouchDb
 
-CouchDb is a NoSQL database accessible via a RESTFUL API. The singularity of CouchDb is that data are immutables. Each update of a document (NoSQL data) is a new document linked to its previous versions by a common `_id`. So, like in git, a historic tree can be made listing all the modification of a document. Each update modifies the property `_rev` like `_rev: 12-ad32d26`. This is the version of the document (`_rev` is for `revision` 🤫).
+CouchDb is a NoSQL database accessible via a RESTFUL API. The singularity of CouchDb is that data are immutables. Each update of a document (NoSQL data) is a new document linked to its previous versions by a common `_id`. So, like in git, a historic tree can be made listing all the modifications of a document. Each update modifies the property `_rev` like `_rev: 12-ad32d26`. This is the version of the document (`_rev` is for `revision` 🤫).
 
-CouchDb masters in database replications. As it is possible to know what has been modified by an `_id` and a `_rev` prop, it is easy for a database to know the delta and replicate from another one. What is important for us will be the replication of a distant database to a local one.
+CouchDb masters in database replications. As it is possible to know what has been modified by an `_id` and a `_rev` prop, it's easy for a database to distinguish a delta and replicate from another one. What is important for us will be the replication of a distant database to a local one.
 
 [CouchDb Documentation](https://docs.couchdb.org/en/stable/)
 
-For our game, we need to install it locally.
+To work on our game, we'll need to install CouchDb locally.
 
 ### Installation
 
@@ -56,11 +56,11 @@ Then, go to the "Databases" tab and create de database called `rps`.
 
 #### Install CouchDb in React Native
 
-Simple! Only do a `yarn add pouchdb-react-native` and we're done!
+Easy! You only have to do a `yarn add pouchdb-react-native` and you're set!
 
 #### PouchDb
 
-If CouchDb can store data in a server, PouchDb helps us manipulate data in locale database. PouchDb is close to CouchDb, indeed, they share the same API! This is so cool!
+If CouchDb can store data in a server, PouchDb helps us manipulate data in locale database. PouchDb is close to CouchDb as they share the same API! And this is so cool!
 
 [PouchDb Documentation](https://pouchdb.com/guides/replication.html)
 
@@ -68,7 +68,7 @@ If CouchDb can store data in a server, PouchDb helps us manipulate data in local
 
 ### Sync
 
-We want to share in real-time a document `Play`. How to do so? We are going to replicate the local database and the database from the server. PouchDb has a really good method for it called `sync`. If there is one reason to use PouchDb, this is the `sync` method! Take a look at a quote from PouchDb documentation:
+We want to share a document `Play` in real-time. How to we do that? We are going to replicate the local database and the database from the server. PouchDb has a really good method for it called `sync`. If there is one reason to use PouchDb it's for the `sync` method! Take a look at a quote from PouchDb documentation:
 
 > CouchDB was designed with sync in mind, and this is exactly what it excels at. Many of the rough edges of the API serve this larger purpose. For instance, managing your document revisions pays off in the future, when you eventually need to start dealing with conflicts.
 
@@ -79,15 +79,15 @@ localDB.replicate.to(remoteDB);
 localDB.replicate.from(remoteDB);
 ```
 
-`sync` has options, and if we adapt it for our game we want:
+`sync` has many options and in our case will need the following settings:
 
 - a live sync so we add the property `sync` to `true`,
-- a synchronization that persists and retry when there are connection problems. So we put the `retry` prop to `true`.
-- We don't want to synchronize the whole database but only the current game! Hopefully, CouchDb and PouchDb can manage that for us with a [filtered replication](https://pouchdb.com/api.html#replication). There are many ways to do a filtered replication but the most efficient one is to give to `sync` the array of ids we want to listen to.
+- a synchronization that persists and retry when there are connection problems. So we define the `retry` prop as `true`.
+- We don't want to synchronize the whole database, only the current game. Fortunately, CouchDb and PouchDb can manage that for us with a [filtered replication](https://pouchdb.com/api.html#replication). There are many ways to do a filtered replication but the most efficient one is to give to `sync` the array of ids we want to listen to.
 
-For more details, I suggest you see the excellent [PouchDb documentation](https://pouchdb.com/guides/replication.html#setting-up-sync)
+For more details, I advice you go check this excellent [PouchDb documentation](https://pouchdb.com/guides/replication.html#setting-up-sync)
 
-So, if we see the whole code, here we have:
+If we have a look at the whole code, this what we see:
 
 ```TypeScript
 // Repository/index.ts
@@ -111,14 +111,14 @@ public liveGame(id: string): void {
 }
 ```
 
-In conclusion, this is pretty simple and intuitive, isn't it?
+This is pretty simple, isn't it?
 We added an event `SYNC_UP` to make our `React` component reactive. We will listen to it later.
 
 ### Merge
 
-In a game, each player will update his own document so we will not have to deal with conflicts. But our component just wants to handle one document `Play` to display plays and scores. So we have a final work to do, we need to fetch the two documents in the database and merge them into one.
+During a game each player will update his own document so we will not have to deal with conflicts. But our component can only handle one document `Play` to display plays and scores. At this stage we only have one work left to do: to fetch the two documents in the database and merge them into one.
 
-It is done in the file `PlayService.`, we can call this method `mergePlays` where we use a spread operator to merge the two documents. But there is a little more work to do when we want to gather play `turns` in which each player updates their moves. For each `turn`, we retrieve the move of the player 1 in the player 1's document and the move of the player 2 in the player 2's document. Like this:
+In the file `PlayService.`, we will call the method `mergePlays` where we use a spread operator to merge the two documents. But there is a little more work to do when we want to gather play `turns` (in which each player updates their moves). For each `turn`, we retrieve the move of the player 1 in the player 1's document and the move of the player 2 in the player 2's document. Like this:
 
 ```TypeScript
 // PlayService.ts
@@ -160,7 +160,7 @@ private mergePlays(play1: IPlay | null, play2: IPlay | null): IPlay | null {
 
 ### The React Native component
 
-After all these operations, it is finally time to display our game on screen. The code below is the page `Play` after the player submits the game id in the home page. We can initialize the liveGame; telling PouchDb to only syncs documents we need.
+Now that all the settings are in place to sync, it's finally time to display our game on screen. The code below is the page `Play` after the player submits the game id in the home page. We can initialize the liveGame; telling PouchDb to only syncs documents we need.
 
 When fetching the play if there is no player 2, we join the play 🙂.
 
@@ -178,7 +178,7 @@ const getPlay = async () => {
 
   // ...
 
-  // Join the play as Player 2 if there is Player 1 waiting!
+  // If there is no player 2 when fetching the game, we will be able to join in.
   if (playFromDb && !playFromDb.player2) {
     await PlayService.joinPlay(id, store.uuid);
   }
@@ -197,7 +197,7 @@ useEffect(() => {
 
 ## A picture is worth a thousand words
 
-To summarize, here 3 steps explained in pictures:
+For a quick sum up, find below the 3 main steps:
 
 1. Player 1 creates the play
    - Player 1 saves a local document
