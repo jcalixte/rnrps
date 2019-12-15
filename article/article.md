@@ -16,7 +16,7 @@ Thanks to CouchDb, we do not need to build any backend! At the end, we will have
 
 What will do exactly our online game?
 
-Two players will play the famous Rock-Paper-Scissors and join a game with its id. Other users will be able to join the game and be spectators. Theses games will update whenever a player plays a roud. Finally, we will display the score.
+Two players will play the famous Rock-Paper-Scissors and join a game with its id. Other users will be able to join the game and be spectators. These games will update whenever a player plays a round. Finally, we will display the score.
 
 Here a quick demo of what a player will see.
 
@@ -68,7 +68,7 @@ If CouchDb is able to store data in a server, PouchDb helps us manipulate data i
 
 ### Sync
 
-We want to share in real time a document `Play`. How to do so? We are going to replicate the local database and the database from the server. PouchDb has a really good method for it called `sync`. If there is one reason to use PouchDb, this is the `sync` method! Take a look at a quote from PouchDb documention:
+We want to share in real time a document `Play`. How to do so? We are going to replicate the local database and the database from the server. PouchDb has a really good method for it called `sync`. If there is one reason to use PouchDb, this is the `sync` method! Take a look at a quote from PouchDb documentation:
 
 > CouchDB was designed with sync in mind, and this is exactly what it excels at. Many of the rough edges of the API serve this larger purpose. For instance, managing your document revisions pays off in the future, when you eventually need to start dealing with conflicts.
 
@@ -85,7 +85,7 @@ localDB.replicate.from(remoteDB);
 - a synchronization that persists and retry when there are connection problems. So we put the `retry` prop to `true`.
 - We don't want to synchronize the whole database but only the current game! Hopefully, CouchDb and PouchDb can manage that for us with a [filtered replication](https://pouchdb.com/api.html#replication). There are many ways to do a filtered replication but the most efficient one is to give to `sync` the array of ids we want to listen to.
 
-For more details, I suggest you see the excelent [PouchDb documentation](https://pouchdb.com/guides/replication.html#setting-up-sync)
+For more details, I suggest you see the excellent [PouchDb documentation](https://pouchdb.com/guides/replication.html#setting-up-sync)
 
 So, if we see the whole code, here we have:
 
@@ -118,7 +118,7 @@ We added an event `SYNC_UP` to make our `React` component reactive. We will list
 
 In a game, each player will update his own document so we will not have to deal with conflicts. But our component just want to handle one document `Play` to display plays and scores. So we have a final work to do, we need to fetch the two documents in the database and merge them into one.
 
-It is done in the file `PlayService.`, we can call this method `mergePlays` where we use a spread operator to merge the two documents. But there is a little more work to do when we want to gather play `turns` in which each players update their moves. We loop through each `turn`, retrieve the move of the player 1 in the player 1's document and retrieve the move of the player 2 in the player 2's document. Like this:
+It is done in the file `PlayService.`, we can call this method `mergePlays` where we use a spread operator to merge the two documents. But there is a little more work to do when we want to gather play `turns` in which each players update their moves. For each `turn`, we retrieve the move of the player 1 in the player 1's document and the move of the player 2 in the player 2's document. Like this:
 
 ```TypeScript
 // PlayService.ts
@@ -242,7 +242,7 @@ To summarize, here 3 steps explained in pictures:
 
 So we've completed our first live sync between two databases in React Native, awesome! There is so much more we can explore now. Here a few examples:
 
-- create an offline first experience app to provide a seemless usage either the app is online or offline.
+- create an offline first experience app to provide a seamless usage either the app is online or offline.
 - create an app that share data in Bluetooth without the need of an Internet connection (like shareable books in region where Internet is expensive)
 - create an app where people can collaborate in live.
 - and so on...
