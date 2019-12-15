@@ -4,9 +4,9 @@
 
 In this tutorial, I will show you how to create a live game with data updating on multiple devices.
 
-For this, let's make a game! A game where players can fight against each other in live. Let's make a live `Rock - Paper - Scissors` game. Well, it is already programmed [here](https://github.com/jcalixte/rnrps) so we only see cool stuff 😄.
+For this, let's make a game! A game where players can fight against each other in live. Let's make a live `Rock - Paper - Scissors` game. Well, it is already programmed [here](https://github.com/jcalixte/rnrps), so we only see cool stuff 😄.
 
-This project is a perfect opportunity to see how to build live data syncs in React Native with CouchDb. Of course, there are many more use cases with these two technologies but it is a good start.
+This is a perfect opportunity to see how to build live data syncs in a mobile app with CouchDb. Of course, there are many more use cases with these two technologies but it is a good start.
 
 Thanks to CouchDb, we do not need to build any backend! At the end, we will have a React Native app connected to a local CouchDb database. With this game, we can focus on the essential parts: the live sync & update on our React component. Feel free to explore components to understand how it is displayed. Let's get ready!
 
@@ -22,15 +22,15 @@ Here a quick demo of what a player will see.
 
 ![Demo](./assets/rps-demo.gif)
 
-First steps is to clone the [repo](https://github.com/jcalixte/rnrps), run the command `yarn`.
+First steps are to clone the [repo](https://github.com/jcalixte/rnrps) and simply run the command `yarn`.
 
 ### What is CouchDb
 
-Before getting deep into the app, it seems important to know the techology behind.
+Before getting deep into the app, it seems primordial to know the technology behind.
 
 #### CouchDb
 
-CouchDb is a NoSQL database accessible via a RESTFUL API. The particularity is that each update of a document (NoSQL data) is a new document linked to its previous versions by a common `_id`. Data in CouchDb are immutables. So, as in git, a historic tree can be made listing all the modification of a document. Each update creates a modification of the property `_rev` like `_rev: 12-ad32d26`, this is the version of the document (`_rev` is for `revision` 🤫).
+CouchDb is a NoSQL database accessible via a RESTFUL API. The singularity of CouchDb is that data are immutables. Each update of a document (NoSQL data) is a new document linked to its previous versions by a common `_id`. So, like in git, a historic tree can be made listing all the modification of a document. Each update modifies the property `_rev` like `_rev: 12-ad32d26`. This is the version of the document (`_rev` is for `revision` 🤫).
 
 CouchDb masters in database replications. As it is possible to know what has been modified by an `_id` and a `_rev` prop, it is easy for a database to know the delta and replicate from another one. What is important for us will be the replication of a distant database to a local one.
 
@@ -40,7 +40,7 @@ For our game we need to install it locally.
 
 ### Installation
 
-To install CouchDb locally, go to their [website](https://docs.couchdb.org/en/latest/install/index.html). The install is really straightforward;
+To install CouchDb locally, go to their [website](https://docs.couchdb.org/en/latest/install/index.html).
 
 #### Configuration
 
@@ -72,7 +72,7 @@ We want to share in real time a document `Play`. How to do so? We are going to r
 
 > CouchDB was designed with sync in mind, and this is exactly what it excels at. Many of the rough edges of the API serve this larger purpose. For instance, managing your document revisions pays off in the future, when you eventually need to start dealing with conflicts.
 
-It is used like this : `localDB.sync(remoteDB)`. Actualy, this method is a shortcut for :
+We use it this way: `localDB.sync(remoteDB)`. Actually, this method is a shortcut for:
 
 ```TypeScript
 localDB.replicate.to(remoteDB);
@@ -82,8 +82,8 @@ localDB.replicate.from(remoteDB);
 `sync` has options, and if we adapt it for our game we want:
 
 - a live sync so we add the property `sync` to `true`,
-- a synchronisation that persists and retry when there are connection problems. So we put the `retry` prop to `true`.
-- We don't want to synchronise the whole database but only the current game! Hopefully, CouchDb and PouchDb can manage that for us with a [filtered replication](https://pouchdb.com/api.html#replication). There are many ways to do a filtered replication but the most efficient one is to give to `sync` the array of ids we want to listen to.
+- a synchronization that persists and retry when there are connection problems. So we put the `retry` prop to `true`.
+- We don't want to synchronize the whole database but only the current game! Hopefully, CouchDb and PouchDb can manage that for us with a [filtered replication](https://pouchdb.com/api.html#replication). There are many ways to do a filtered replication but the most efficient one is to give to `sync` the array of ids we want to listen to.
 
 For more details, I suggest you see the excelent [PouchDb documentation](https://pouchdb.com/guides/replication.html#setting-up-sync)
 
@@ -160,11 +160,11 @@ private mergePlays(play1: IPlay | null, play2: IPlay | null): IPlay | null {
 
 ### The React Native component
 
-After all these operations, it is finally time to display our game in screen. The code below is the page `Play` after the player submit the game id in the home page. We can init the liveGame; telling PouchDb to only sync the documents we need.
+After all these operations, it is finally time to display our game in screen. The code below is the page `Play` after the player submit the game id in the home page. We can initialize the liveGame; telling PouchDb to only syncs documents we need.
 
 When fetching the play if there is no player 2, we join the play 🙂.
 
-We can listen to changes by adding a listener to th `SYNC_UP` event from our PouchDb repository.
+We can listen to changes by adding a listener to the `SYNC_UP` event from our PouchDb repository.
 
 ```tsx
 // src/views/Play.tsx
@@ -234,7 +234,7 @@ To summarize, here 3 steps explained in pictures:
 3. The play is ready
    - Player 1 gets the updates and is now ready to play the first round
    - Player 1 and player 2 save their document locally and then share them with the server. That way every player receive the update of their opponent.
-   - The app merges the two documents into one so we can calculate who wins the round 1 and update the score.
+   - The app merges the two documents into one, so we can calculate who wins the round 1 and update the score.
 
 ![Step 3](./assets/step-3.png)
 
