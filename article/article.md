@@ -32,7 +32,7 @@ Before getting deeper into the app, it seems primordial to first know the techno
 
 CouchDb is a NoSQL database accessible via a RESTFUL API. The singularity of CouchDb is that data are immutables. Each update of a document (NoSQL data) is a new document linked to its previous versions by a common `_id`. So, like in git, a historic tree can be made listing all the modifications of a document. Each update modifies the property `_rev` like `_rev: 12-ad32d26`. This is the version of the document (`_rev` is for `revision` 🤫).
 
-CouchDb masters in database replications. As it is possible to know what has been modified by an `_id` and a `_rev` prop, it's easy for a database to distinguish a delta and replicate from another one. At this stage the most important will be the replication of a distant database to a local one.
+CouchDb masters in database replications. As it's possible to know what has been modified by an `_id` and a `_rev` prop, it's easy for a database to distinguish a delta and replicate from another one. At this stage the most important will be the replication of a distant database to a local one.
 
 [CouchDb Documentation](https://docs.couchdb.org/en/stable/)
 
