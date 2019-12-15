@@ -8,7 +8,7 @@ For this, let's make a game! A game where players can fight against each other i
 
 This is a perfect opportunity to see how to build live data syncs in a mobile app with CouchDb. Of course, there are many more use cases with these two technologies but it is a good start.
 
-Thanks to CouchDb, we do not need to build any backend! At the end, we will have a React Native app connected to a local CouchDb database. With this game, we can focus on the essential parts: the live sync & update on our React component. Feel free to explore components to understand how it is displayed. Let's get ready!
+Thanks to CouchDb, we do not need to build any backend! In the end, we will have a React Native app connected to a local CouchDb database. With this game, we can focus on the essential parts: the live sync & update on our React component. Feel free to explore components to understand how it is displayed. Let's get ready!
 
 ## 1. Overview
 
@@ -36,7 +36,7 @@ CouchDb masters in database replications. As it is possible to know what has bee
 
 [CouchDb Documentation](https://docs.couchdb.org/en/stable/)
 
-For our game we need to install it locally.
+For our game, we need to install it locally.
 
 ### Installation
 
@@ -44,7 +44,7 @@ To install CouchDb locally, go to their [website](https://docs.couchdb.org/en/la
 
 #### Configuration
 
-Create a admin and configure CouchDb as a single node.
+Create an admin and configure CouchDb as a single node.
 
 #### Create the `RPS` database
 
@@ -60,7 +60,7 @@ Simple! Only do a `yarn add pouchdb-react-native` and we're done!
 
 #### PouchDb
 
-If CouchDb is able to store data in a server, PouchDb helps us manipulate data in locale database. PouchDb is really close to CouchDb, indeed, they share the same API! This is really cool!
+If CouchDb can store data in a server, PouchDb helps us manipulate data in locale database. PouchDb is close to CouchDb, indeed, they share the same API! This is so cool!
 
 [PouchDb Documentation](https://pouchdb.com/guides/replication.html)
 
@@ -68,11 +68,11 @@ If CouchDb is able to store data in a server, PouchDb helps us manipulate data i
 
 ### Sync
 
-We want to share in real time a document `Play`. How to do so? We are going to replicate the local database and the database from the server. PouchDb has a really good method for it called `sync`. If there is one reason to use PouchDb, this is the `sync` method! Take a look at a quote from PouchDb documentation:
+We want to share in real-time a document `Play`. How to do so? We are going to replicate the local database and the database from the server. PouchDb has a really good method for it called `sync`. If there is one reason to use PouchDb, this is the `sync` method! Take a look at a quote from PouchDb documentation:
 
 > CouchDB was designed with sync in mind, and this is exactly what it excels at. Many of the rough edges of the API serve this larger purpose. For instance, managing your document revisions pays off in the future, when you eventually need to start dealing with conflicts.
 
-We use it this way: `localDB.sync(remoteDB)`. Actually, this method is a shortcut for:
+We use it this way: `localDB.sync(remoteDB)`. This method is a shortcut for:
 
 ```TypeScript
 localDB.replicate.to(remoteDB);
@@ -111,14 +111,14 @@ public liveGame(id: string): void {
 }
 ```
 
-In conclusion this is pretty simple and intuitive, isn't it?
+In conclusion, this is pretty simple and intuitive, isn't it?
 We added an event `SYNC_UP` to make our `React` component reactive. We will listen to it later.
 
 ### Merge
 
-In a game, each player will update his own document so we will not have to deal with conflicts. But our component just want to handle one document `Play` to display plays and scores. So we have a final work to do, we need to fetch the two documents in the database and merge them into one.
+In a game, each player will update his own document so we will not have to deal with conflicts. But our component just wants to handle one document `Play` to display plays and scores. So we have a final work to do, we need to fetch the two documents in the database and merge them into one.
 
-It is done in the file `PlayService.`, we can call this method `mergePlays` where we use a spread operator to merge the two documents. But there is a little more work to do when we want to gather play `turns` in which each players update their moves. For each `turn`, we retrieve the move of the player 1 in the player 1's document and the move of the player 2 in the player 2's document. Like this:
+It is done in the file `PlayService.`, we can call this method `mergePlays` where we use a spread operator to merge the two documents. But there is a little more work to do when we want to gather play `turns` in which each player updates their moves. For each `turn`, we retrieve the move of the player 1 in the player 1's document and the move of the player 2 in the player 2's document. Like this:
 
 ```TypeScript
 // PlayService.ts
@@ -160,7 +160,7 @@ private mergePlays(play1: IPlay | null, play2: IPlay | null): IPlay | null {
 
 ### The React Native component
 
-After all these operations, it is finally time to display our game in screen. The code below is the page `Play` after the player submit the game id in the home page. We can initialize the liveGame; telling PouchDb to only syncs documents we need.
+After all these operations, it is finally time to display our game on screen. The code below is the page `Play` after the player submits the game id in the home page. We can initialize the liveGame; telling PouchDb to only syncs documents we need.
 
 When fetching the play if there is no player 2, we join the play 🙂.
 
@@ -233,7 +233,7 @@ To summarize, here 3 steps explained in pictures:
 
 3. The play is ready
    - Player 1 gets the updates and is now ready to play the first round
-   - Player 1 and player 2 save their document locally and then share them with the server. That way every player receive the update of their opponent.
+   - Player 1 and player 2 save their document locally and then share them with the server. That way every player receives updates from their opponent.
    - The app merges the two documents into one, so we can calculate who wins the round 1 and update the score.
 
 ![Step 3](./assets/step-3.png)
@@ -242,7 +242,7 @@ To summarize, here 3 steps explained in pictures:
 
 So we've completed our first live sync between two databases in React Native, awesome! There is so much more we can explore now. Here a few examples:
 
-- create an offline first experience app to provide a seamless usage either the app is online or offline.
-- create an app that share data in Bluetooth without the need of an Internet connection (like shareable books in region where Internet is expensive)
+- create an offline-first experience app to provide a seamless usage either the app is online or offline.
+- create an app that shares data in Bluetooth without the need of an Internet connection (like shareable books in a region where the Internet is expensive)
 - create an app where people can collaborate in live.
 - and so on...
