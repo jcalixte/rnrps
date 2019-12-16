@@ -87,7 +87,7 @@ localDB.replicate.from(remoteDB);
 
 For more details, I recommend this excellent [PouchDb documentation](https://pouchdb.com/guides/replication.html#setting-up-sync)
 
-If we have a look at the whole code, this what we should see:
+If we have a look at the whole code, this is what we should see:
 
 ```TypeScript
 // Repository/index.ts
