@@ -26,11 +26,11 @@ First steps are to clone the [repo](https://github.com/jcalixte/rnrps) and simpl
 
 ### What is CouchDb
 
-Before getting deeper into the app, it seems primordial to first know the technology behind it.
+Before getting deeper into the app, let's dive into the technology behind it.
 
 #### CouchDb
 
-CouchDb is a NoSQL database accessible via a RESTFUL API. The singularity of CouchDb is that data are immutables. Each update of a document (NoSQL data) is a new document linked to its previous versions by a common `_id`. So, like in git, a historic tree can be made listing all the modifications of a document. Each update modifies the property `_rev` like `_rev: 12-ad32d26`. This is the version of the document (`_rev` is for `revision` 🤫).
+CouchDb is a NoSQL database accessible via a RESTFUL API. The singularity of CouchDb is that data is immutables. Each update of a document (NoSQL data) is a new document linked to its previous versions by a common `_id`. So, like in git, a historic tree can be made listing all the modifications of a document. Each update modifies the property `_rev` like `_rev: 12-ad32d26`. This is the version of the document (`_rev` is for `revision` 🤫).
 
 CouchDb masters in database replications. As it's possible to know what has been modified by an `_id` and a `_rev` prop, it's easy for a database to distinguish a delta and replicate from another one. At this stage the most important will be the replication of a distant database to a local one.
 
@@ -56,7 +56,7 @@ Then, go to the "Databases" tab and create de database called `rps`.
 
 #### Install CouchDb in React Native
 
-Easy! You only have to do a `yarn add pouchdb-react-native` and you're set!
+Easy! You only have to run `yarn add pouchdb-react-native` and you're set!
 
 #### PouchDb
 
