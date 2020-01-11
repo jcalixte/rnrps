@@ -30,7 +30,7 @@ Before getting deeper into the app, let's dive into the technology behind it.
 
 #### CouchDb
 
-CouchDb is a NoSQL database accessible via a RESTFUL API. The singularity of CouchDb is that data is immutables. Each update of a document (NoSQL data) is a new document linked to its previous versions by a common `_id`. So, like in git, a historic tree can be made listing all the modifications of a document. Each update modifies the property `_rev` like `_rev: 12-ad32d26`. This is the version of the document (`_rev` is for `revision` 🤫).
+CouchDb is a NoSQL database accessible via a RESTFUL API. The singularity of CouchDb is that data is immutable. Each update of a document (NoSQL data) is a new document linked to its previous versions by a common `_id`. So, like in git, a historic tree can be made listing all the modifications of a document. Each update modifies the property `_rev` like `_rev: 12-ad32d26`. This is the version of the document (`_rev` is for `revision` 🤫).
 
 CouchDb masters in database replications. As it's possible to know what has been modified by an `_id` and a `_rev` prop, it's easy for a database to distinguish a delta and replicate from another one. At this stage the most important will be the replication of a distant database to a local one.
 
@@ -240,9 +240,13 @@ For a quick sum up, find below the 3 main steps:
 
 ## Conclusion
 
-DONE! We've completed our first live sync between two databases in React Native, awesome! There is so much more we can explore now. Here a few examples:
+DONE! We've completed our first live sync between two databases in React Native, awesome! Here a final look with two players (one player on a PWA and one player on the React Native App):
 
-- create an offline-first experience app to provide a seamless usage either the app is online or offline.
+![final-demo](./assets/demo.gif)
+
+There is so much more we can explore now. Here a few examples:
+
+- create an offline-first app to provide a seamless experience either the app is online or offline.
 - create an app that shares data in Bluetooth without the need of an Internet connection (like shareable books in a region where the Internet is expensive)
 - create an app where people can collaborate in live.
 - and so on...
