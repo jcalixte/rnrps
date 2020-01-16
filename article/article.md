@@ -16,7 +16,7 @@ Thanks to CouchDb we don't need to build any backend! By the end we'll have a Re
 
 What exactly will our online game be able to do?
 
-The famous and popular Rock-Paper-Scissors will be played by two people who will join the game thanks to its id. Other users will also be able to participate and join as spectators. Afer each round, the app will update the game and at the end display the final score.
+The famous and popular Rock-Paper-Scissors will be played by two people who will join the game thanks to its id. Other users will also be able to participate and join as spectators. After each round, the app will update the game and at the end display the final score.
 
 Here a quick demo of what a player will see.
 
@@ -240,9 +240,7 @@ For a quick sum up, find below the 3 main steps:
 
 ## Conclusion
 
-DONE! We've completed our first live sync between two databases in React Native, awesome! Here a final look with two players (one player on a PWA and one player on the React Native App):
-
-![final-demo](./assets/demo.gif)
+DONE! We've completed our first live sync between two databases in React Native, awesome!
 
 There is so much more we can explore now. Here a few examples:
 
